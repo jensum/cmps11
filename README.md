@@ -1,4 +1,4 @@
-# cmps11
+# cmps11 - Compass - Python - I2C
 CMPS11 - Tilt Compensated Compass Module 
 
 I2C mode
