@@ -1,5 +1,6 @@
 ##cmps11 Lib by jensum, 30.11.16
 import smbus
+import time
 
 ##Register	 Function
 ##0			    Command register (write) / Software version (read)
@@ -77,6 +78,24 @@ def getRoll():
     roll = bus.read_byte_data(address, 27)
     return roll
 
+def startCalibration():
+    #need to send 0xF0,0xF5 and then 0xF6 to Command register
+    #[start sequence] [I2C address] [register address] [command byte] [stop sequence]
+    #minimum 20ms between
+    bus.write_byte_data(address,0, 0xF0)
+    print "send 0xF0"
+    time.sleep(0.05)
+    bus.write_byte_data(address,0, 0xF5)
+    print "send 0xF5"
+    time.sleep(0.05)
+    bus.write_byte_data(address,0, 0xF6)
+    print "send 0xF6"
+    print "start Calibration"
+    
+def stopCalibration():
+    # sending 0xF8
+     bus.write_byte_data(address,0, 0xF8)
+     print "Calibration stopped"
 
 def getSensorData():
     global table_String
@@ -94,3 +113,5 @@ def getSensorData():
     id +=1
     table_String += s
     return table_String 
+    
+
